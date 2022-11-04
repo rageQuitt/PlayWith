@@ -10,7 +10,7 @@ $router-> map('GET','/','articles');
 /*Routes du layout*/
 $router-> map('GET','/','layout');
 $router-> map('GET','/nous-contacter','contact');
-$router-> map('GET','/blog/[*:slug]-[i:id]','blog/articles');
+$router-> map('GET','/blog/[*:slug]-[i:id]','blog/templates');
 $router-> map('GET', '/[:action]','404');
 
 $match = $router->match();
