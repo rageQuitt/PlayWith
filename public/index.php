@@ -4,9 +4,20 @@ require '..\blog\layout.phtml';
 $uri = $_SERVER['REQUEST_URI'];
 $router = new AltoRouter();
 
+/*Abrévation pour cibler templates*/
+define('VIEW_PATH', dirname(__DIR__).'/templates');
+
 $router-> map('GET','/','homeView');
 /*Routes des articles*/
 $router-> map('GET','/','articles');
+/*route catégories*/
+$router ->map('GET','/blog',function(){
+                require VIEW_PATH.'/templates/post/index.php';
+});
+
+$router ->map('GET','/blog/category',function(){
+        require VIEW_PATH.'/templates/category/show.php';
+});
 /*Routes du layout*/
 $router-> map('GET','/','layout');
 $router-> map('GET','/nous-contacter','contact');
@@ -49,8 +60,9 @@ if (is_array($match3)){
                 $params = $match3['params'];
                 require "../templates/{$match2['target']}.php";
         }
-       
+
+
 };
 
-/*var_dump($match2);*/
+
 
