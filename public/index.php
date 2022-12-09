@@ -1,68 +1,30 @@
-<?php require '../vendor/autoload.php';
+<?php
 
-require '..\blog\layout.phtml';
-$uri = $_SERVER['REQUEST_URI'];
-$router = new AltoRouter();
+use App\Controller\BlogController;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
-/*Abrévation pour cibler templates*/
-define('VIEW_PATH', dirname(__DIR__).'/templates');
+$route = new Route('/home/{slug}', ['controller_name' => HomeController::class]);
+$routes = new RouteCollection();
+$routes->add('blog_show', $route);
 
-$router-> map('GET','/','homeView');
-/*Routes des articles*/
-$router-> map('GET','/','articles');
-/*route catégories*/
-$router ->map('GET','/blog',function(){
-                require VIEW_PATH.'/templates/post/index.php';
-});
+$context = new RequestContext();
 
-$router ->map('GET','/blog/category',function(){
-        require VIEW_PATH.'/templates/category/show.php';
-});
-/*Routes du layout*/
-$router-> map('GET','/','layout');
-$router-> map('GET','/nous-contacter','contact');
-$router-> map('GET','/blog/[*:slug]-[i:id]','blog/templates');
-$router-> map('GET', '/[:action]','404');
+// Routing can match routes with incoming requests
+$matcher = new UrlMatcher($routes, $context);
+$parameters = $matcher->match('/home/lorem-ipsum');
+// $parameters = [
+//     '_controller' => 'App\Controller\BlogController',
+//     'slug' => 'lorem-ipsum',
+//     '_route' => 'blog_show'
+// ]
 
-$match = $router->match();
-if (is_array($match)){
-        require '..\blog\layout.phtml';
-        if (is_callable($match['target'])) {
-                call_user_func_array($match['target'],$match['params']);
-        } else{
-                $params = $match['params'];
-                require "../templates/{$match['target']}.php";
-        }
-       
-}
-/*test de route*/
-/*Routes des articles du blog ** Attention au require*/
-$match2 = $router->match();
-if (is_array($match2)){
-        require '..\blog\layout.phtml';
-        require '..\blog\templates\homeView.php';
-        if (is_callable($match2['target'])) {
-                call_user_func_array($match2['target'],$match2['params']);
-        } else{
-                $params = $match2['params'];
-                require "../templates/{$match2['target']}.php";
-        }
-       
-};
-/*Routes du layout Head/Foot** Attention au require*/
-$match3 = $router->match();
-if (is_array($match3)){
-        require '..\blog\layout.phtml';
-        require '..\blog\templates\articles.php';
-        if (is_callable($match2['target'])) {
-                call_user_func_array($match3['target'],$match3['params']);
-        } else{
-                $params = $match3['params'];
-                require "../templates/{$match2['target']}.php";
-        }
-
-
-};
-
-
-
+// Routing can also generate URLs for a given route
+$generator = new UrlGenerator($routes, $context);
+$url = $generator->generate('blog_show', [
+    'slug' => 'my-blog-post',
+]);
+// $url = '/blog/my-blog-post'
