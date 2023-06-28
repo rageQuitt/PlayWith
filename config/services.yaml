@@ -1,0 +1,37 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+parameters:
+    images_directory: '%kernel.project_dir%/public/assets/images/'
+    images_directory_2: '%kernel.project_dir%/public/assets/images/BDD/'
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    doctrine.system_cache_provider:
+        class: Doctrine\Common\Cache\Psr6\DoctrineProvider
+        factory: ['App\Cache\DoctrineProviderFactory', 'createDoctrineProvider']
+        arguments:
+            - '@cache.app'
+
+    App\Twig\AppExtension:
+        tags:
+            - { name: twig.extension }
+
+    App\Services\OrderService:
+        autowire: true
+        autoconfigure: true
+
+twig:
+    globals:
+        orderService: '@App\Services\OrderService'
+        CartService: '@App\Services\CartService'

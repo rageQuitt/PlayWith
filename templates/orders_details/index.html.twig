@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+    <h1>Order Details</h1>
+            {% for orderDetail in orderDetails %}
+                <tr>
+                    <td>{{ orderDetail.getProducts().getName() }}</td>
+                    <td>{{ orderDetail.getQuantity() }}</td>
+                    <td>{{ orderDetail.getPrice() }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

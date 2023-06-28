@@ -1,0 +1,949 @@
+/* Globals */
+
+
+* {
+  font-family: 'Inter';
+}
+
+p{
+  font-style: oblique;
+
+}
+div.product-item__name a{
+
+  font-size: 32px;
+  text-decoration: none;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* masquer le débordement horizontal */
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------     Page A Propos            ----------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+div.about-text h1{
+
+  font-size: 60px;
+
+}
+
+.auteur {
+  width : 100% ;
+  height: auto ;
+  border: 5px solid yellow; /* ajoute un cadre jaune autour de l'image */
+}
+
+.auteur img {
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.about-text {
+  /* autres styles */
+  border: 5px solid yellow; /* ajoute un cadre jaune autour du texte */
+}
+
+
+.about-main {
+  display: flex; /* aligne les éléments enfants en ligne */
+  justify-content: center; /* centre les éléments horizontalement */
+  align-items: center; /* centre les éléments verticalement */
+  height: calc(130vh - 100px); /* réduit la hauteur pour tenir compte de la navbar, ajustez le 100px selon la hauteur de votre navbar */
+  gap: 20px; /* ajoute un espace entre les éléments enfants */
+}
+
+.auteur, .about-text {
+  flex: 1; /* assure que les éléments prennent une part égale de l'espace disponible */
+}
+
+
+.banniere {
+  width: 100%;
+  height: auto; /* réduit la hauteur pour tenir compte de la navbar, ajustez le 100px selon la hauteur de votre navbar */
+  background: yellow; /* la bannière sera de couleur jaune */
+  position: absolute; /* la positionne absolument par rapport à l'élément parent */
+  bottom: auto; /* la place en bas de l'élément parent */
+}
+
+
+.about-text h1 {
+  /* Ajouter une animation au titre */
+  animation: Bounce 2s linear infinite;
+  text-align: center;
+}
+
+.about-text p {
+  /* Ajouter une transformation lors du survol des paragraphes */
+  transition: transform 0.3s ease-in-out;
+}
+
+.about-text p:hover {
+  /* Agrandir le paragraphe lors du survol */
+  transform: scale(1.1);
+}
+
+@keyframes Gradient {
+  0% {background-position: 0% 50%}
+  50% {background-position: 100% 50%}
+  100% {background-position: 0% 50%}
+}
+
+@keyframes Bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  40% {transform: translateY(-30px);}
+  60% {transform: translateY(-15px);}
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------ Categories ---------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  margin: 10px;
+}
+
+.category-image {
+  max-width: 250px;
+  height: auto; 
+}
+
+/* ajout class active*/
+
+.category-image.active {
+
+  transform: scale(1.1); /* Agrandit l'image de 10% */
+  opacity: 0.8; /* Rend l'image semi-transparente */
+  transition: transform 0.3s, opacity 0.3s;
+
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* Custom default button */
+.btn-light,
+.btn-light:hover,
+.btn-light:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+}
+
+/* Base structure */
+
+body {
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/* Header */
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+.nav-masthead .nav-link {
+  color: rgba(255, 255, 255, .5);
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------   Page 'blog' - carousel ---------------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+.carousel-container {
+  position: relative;
+}
+
+.carousel-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-item img {
+  width: 100%; /* Vous pouvez utiliser un pourcentage ou une largeur fixe, par exemple '600px' */
+  height: 400px; /* Définissez la hauteur souhaitée, par exemple '400px' */
+  object-fit: cover; /* Cette propriété permet de conserver les proportions de l'image tout en remplissant l'espace disponible */
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ------------------------------------------------ Page 'products list '---------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+.container {
+  max-width: 960px;
+}
+
+
+.product-image-container {
+  flex: 1;
+  /* Add styles for the product image container */
+}
+
+.product-info-container {
+  flex: 1;
+  /* Add styles for the product information container */
+}
+
+.product-section {
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  list-style: none;
+}
+
+.product-item__info {
+  background-color: white;
+  border-radius: 5px;
+  border: 5px solid transparent;
+  margin: 10px;
+  padding: 5px;
+  flex-basis: calc(50% - 20px); /* 33.33% correspond à 1/3 de la largeur totale (pour 3 articles par ligne), 20px est une estimation pour la marge */
+  box-sizing: border-box; 
+}
+
+.product-item__info:hover {
+  border-color: black , transparent;
+  
+}
+
+.product-item__name {
+  font-size: 1.5em; /* Réduite par rapport à l'originale pour une meilleure lisibilité */
+  color: greenyellow;
+  text-align: center;
+}
+
+.product-item__price {
+  font-size: 1em;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 0; /* Remet l'élément à sa position initiale */
+  left: 0; /* Remet l'élément à sa position initiale */
+}
+
+.product-item__img-container {
+  border-radius: 5px;
+  transition: transform .2s;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  overflow: hidden; /* Cette propriété empêche l'image de déborder de son conteneur lors de l'agrandissement */
+  display: flex; /* Ces trois lignes garantissent que l'image reste centrée lors de l'agrandissement */
+  justify-content: center;
+  align-items: center;
+}
+
+.product-item__img-container img {
+  transition: transform .2s;
+  object-fit: cover;
+}
+
+.product-item__img-container:hover img {
+  transform: scale(1.2); /* Vous pouvez ajuster cette valeur pour contrôler le niveau d'agrandissement. Ici, j'ai réduit l'agrandissement pour un effet plus discret. */
+}
+
+.product-item__size{
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-item__size select {
+  width: 80%;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.product-item__cart-options{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Allows the buttons to wrap onto the next line if there is not enough space */
+}
+
+.product-item__cart-options button {
+  padding: 5px 10px; /* Reduces the padding inside the buttons */
+  font-size: 14px; /* Reduces the font size in the buttons */
+  cursor: pointer;
+  flex: 1 1 auto; /* Allows the buttons to grow and shrink as needed */
+}
+
+.product-item__cart-options button:hover {
+  background-color: #f0f0f0; /* Changes the background color when hovering over the buttons */
+}
+
+@media (max-width: 600px) {
+  .product-item {
+    flex: 1 0 100%; /* On small screens, each product takes up the full width */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .product-item {
+    flex: 1 0 50%; /* On medium screens, each product takes up roughly 50% of the width */
+  }
+
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------     Page Products show     -------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+.single-product-section__container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.single-product-section__img{
+  flex-basis: 50%;
+  max-width: 50%;
+  height: auto;
+}
+
+.single-product-section__img img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.single-product-section__info{
+  flex-basis: 45%;
+  max-width: 45%;
+}
+
+.single-product-item__name{
+  font-size: 36px;
+  margin: 10px 0;
+}
+
+.single-product-item__price{
+  font-size: 32px;
+  color: green;
+  margin: 10px 0;
+}
+
+.single-product-item__size{
+  margin: 20px 0;
+}
+
+.single-product-item__size select {
+  width: 100%;
+  padding: 5px;
+  font-size: 18px;
+}
+
+.single-product-item__cart-options{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.single-product-item__cart-options button {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.single-product-item__cart-options button:hover {
+  background-color: #f0f0f0;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------     Page  Contact      -------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+
+.contact-page h1 {
+  text-align: center;
+  color: #333;
+}
+
+.contact-page div.contact-form-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.contact-form {
+  width: 500px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.contact-form div.form-field {
+  margin-bottom: 15px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.contact-form button {
+  background-color: #5C7AEA;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #4158d0;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------     Page Blog Article      -------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+
+.blog-page .content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  padding: 20px;
+}
+
+.blog-page .content-container .article-list {
+  width: 70%;
+}
+
+.blog-page .content-container .article-list h2 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.blog-page .content-container .article-list h2 a {
+  text-decoration: none;
+  color: #333;
+}
+
+.blog-page .content-container .article-list p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+div.blog-container{
+
+  display: flex;
+}
+.blog-page .sidebar {
+  width: 30%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.blog-page .sidebar .aside-content {
+  margin-bottom: 20px;
+}
+
+.blog-page .sidebar .aside-content h3 {
+  color: #333;
+  font-size: 1.2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.blog-page .sidebar .aside-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.blog-page .sidebar .aside-content ul li {
+  margin-bottom: 10px;
+}
+
+.blog-page .sidebar .aside-content ul li a {
+  text-decoration: none;
+  color: #666;
+}
+
+.blog-page .sidebar .aside-content ul li a:hover {
+  color: #333;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------- Page blog/article/ {id} -------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+div.content-acontainer{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+div.img-acontainer{
+
+  flex: 1 0 50%;
+  padding: 10px;
+
+}
+
+img.post-img{
+
+  flex: 1 0 50%;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-page .sidebar {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  order: 2; /* Cela place la barre latérale à droite */
+}
+
+.post-page .post {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.post-page .post h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+  width: 100%;
+}
+
+.post-page .video-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%; /* Aspect ratio for 16:9 videos */
+}
+
+.post-page .post-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  .post-page .post, 
+  .post-page .img-container, 
+  .post-page .text-content {
+    width: 100%;
+  }
+
+  .post-page .post h1 {
+    font-size: 20px;
+  }
+}
+
+/* Styles additionnels pour les liens */
+.post-page a {
+  color: #333;
+  text-decoration: none;
+}
+
+.post-page a:hover {
+  color: #555;
+}
+
+/* Extra utilities */
+
+.flex-equal > * {
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    flex: 1;
+  }
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ------------------------------------------------Login Page -----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+/* Hide the navigation bar */
+nav.login {
+    display: none;
+  }
+  nav.login:hover{
+    display: block;
+  }
+  /* Make the navigation bar sticky and transparent when scrolling */
+  nav.login.sticky {
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: transparent;
+    z-index: 1000;
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100vh;
+  }
+  
+  .login-form {
+    flex-basis: 65%;
+    padding: 2rem;
+    background-color: #f5f5dc;
+    border-right: 1px solid #ccc;
+  }
+  
+  .login-form label {
+    margin-bottom: 0.5rem;
+  }
+  
+  .login-form input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: #ecf4f2;
+  }
+  
+  .separator {
+    border-bottom: 1px solid #ccc;
+    margin: 1rem 0;
+  }
+  
+  .sign-up-container {
+    flex-basis: 35%;
+    padding: 2rem;
+    background-image: linear-gradient(to bottom left, #39a7ab, #36b88a);
+  }
+  
+  .btn-outline-secondary {
+    color: #000;
+    border-color: #27b397;
+    background-color: #27b397;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  }
+  
+  .btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #ccc;
+    border-color: #ccc;
+  }
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+ /*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------- Page Inscription----------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+.gradient-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: linear-gradient(to bottom left, #39a7ab, #36b88a);
+}
+
+
+h1.inscription {
+  font-size: 24px;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+body.registration-form {
+  font-family: 'Inter', sans-serif;
+  background-color: #f0f2f5;
+  height: 100vh;
+  margin: auto;
+}
+
+main.registration-form {
+  background-color: #ffffff;
+  border: 1px solid #ccd0d5;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  display: flex; /* Ajouté pour organiser les éléments */
+  flex-direction: column; /* Ajouté pour orienter les éléments verticalement */
+}
+
+div.yubel {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+div.form_row {
+  font-size: 14px;
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #ccd0d5;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+
+}
+
+div.form_row label {
+  flex: 1;
+  margin-right: 10px;
+}
+
+div.form_row input {
+  flex: 2;
+}
+
+form div button.submit_button {
+  text-align: center;
+  margin-top: 20px;
+  order: 2; /* Ajouté pour positionner le bouton en bas du formulaire */
+}
+
+form div button.submit_button {
+  background-color: #1877f2;
+  border: none;
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form div button.submit_button button:hover {
+  background-color: #1483ef;
+}
+
+/*Ajustements*/
+
+.city-field {
+  margin-top: -10px; 
+}
+
+.post-media{
+  margin-bottom: 20px;
+}
+
+.post-image img {
+  max-width: 100%; 
+  max-height: 500px; 
+  height: auto; 
+  width: auto;  
+}
+
+
+.product-item__info {
+  flex: 0 0 20%; /* Change this value as needed */
+  margin: 10px; /* Optional, for some space between the items */
+}
+
+
+
+/* Pour centrer verticalement le contenu des posts, vous pouvez utiliser Flexbox. */
+.post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div ul li{
+  list-style: none;
+}
+
+#aside{
+    background-color: #f7f9f8;
+    margin-bottom: 30px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+.nav-link{
+  list-style: none;
+}
+
+li.nav-item{
+  list-style: none;
+}
+
+.product-section {
+  
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Pour un espacement équilibré entre les éléments */
+  width: 100%; /* Prend toute la largeur disponible */
+  list-style: none;
+}
+
+.product-item__img-container img {
+  width: 286.25px;
+  height: 380px;
+  padding: 0 10px 16px 10px;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+
+.product-item {
+  flex: 1 0 200px; /* Cela garantit que chaque produit aura une largeur minimale de 200px */
+}
+
+/* Styles pour les écrans plus petits que 600px */
+@media (max-width: 600px) {
+  /* Ajouter des styles spécifiques pour les petits écrans ici */
+  .cover-container, .container {
+    max-width: 100%;
+  }
+
+  .carousel-item img {
+    height: auto;
+  }
+
+  .login-container, .cross-selling-container {
+    flex-direction: column;
+  }
+
+  .login-form, .sign-up-container {
+    flex-basis: 100%;
+  }
+
+  .product-item {
+    flex: 1 0 100%;
+  }
+
+  nav.login {
+    display: block;
+  }
+
+  nav.about {
+    flex-direction: column;
+  }
+
+  nav.about ul {
+    flex-direction: column;
+  }
+
+  .about-main {
+    flex-direction: column;
+  }
+
+  .photo {
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  .product-item__img-container img {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+/* Styles pour les écrans entre 601px et 1024px */
+@media (min-width: 601px) and (max-width: 1024px) {
+  /* Ajouter des styles spécifiques pour les écrans moyens ici */
+  .product-item {
+    flex: 1 0 50%;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar-nav {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-nav {
+    display: flex;
+  }
+}

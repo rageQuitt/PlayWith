@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.id }}{% endblock %}
+
+{% block content %}
+<main>
+    <a href="{{url('products_list')}}">Tous les produits</a> > 
+    <a href="{{url('categories_list', { 'categoryId': product.categories.id })}}">{{product.categories.name}}</a> > 
+    <a href="{{url('product_show', { 'id': product.id })}}">{{product.name}}</a>
+    <section class="single-product-section">
+        <div class="single-product-section__container">
+            <div class="single-product-section__img">
+            {% for image in product.getImages %}
+                {% if image.imagePath is not empty %}
+                    <img src="{{ asset('assets/images/BDD/Produits/' ~ image.imagePath) }}" alt="{{ product.name }}">
+                {% else %}
+                    <p>Aucun chemin d'image disponible pour ce produit.</p>
+                 {% endif %}
+                {% else %}
+                <p>Produit indisponible </p>
+            {% endfor %}
+        </div>
+            <div class="single-product-section__info">
+                <div class="single-product-item__name">
+                    <h2>{{ product.name }}</h2>
+                </div>
+                <div class="single-product-item__price">
+                    <h3>{{ product.price }} €</h3>
+                </div>
+                {% if product.hasSizes %}
+                <div class="single-product-item__size">
+                    <form>
+                        <select name="size{{ product.id }}" id="size{{ product.id }}">
+                            <option value="" disabled selected>Choisissez une taille</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </form>
+                </div>
+                {% endif %}
+                <div class="single-product-item__cart-options">
+                    <button id="ajouterPanier{{ product.id }}">Ajouter article</button>
+                    <button id="retirerPanier{{ product.id }}">Retirer article</button>
+                    <p>Articles dans le panier: <span id="panierValue{{ product.id }}">0</span></p>
+                </div>
+                <div>
+                <p>Description: {{ product.description }}</p>
+                <button id="confirmerCommande{{ product.id }}"><div>Confirmer commande</div></button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

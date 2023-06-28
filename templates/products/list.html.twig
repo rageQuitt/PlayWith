@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+{% block content %}
+ <main>
+    <!-- Cette ligne sert à diriger l'utilisateur vers la liste des produits. -->
+    <a href="{{ url('products_list') }}">Tout les produits</a>
+
+    <!-- Cette section contient tous les produits. -->
+    <section class="product-section">
+        <ul class="product-list">
+            {% for product in products %}
+                <li>
+                    <div class="product-item__info">
+                        <!-- Cette partie affiche le nom du produit. -->
+                        <div class="product-item__name">
+                            <a href="{{ path('product_show', {'id': product.id}) }}">
+                                <h2>{{ product.name }}</h2>
+                            </a>
+                        </div>
+
+                        <!-- Cette partie affiche le prix du produit. -->
+                        <div class="product-item__price">
+                            <h5>{{ product.price }} €</h5>
+                        </div>
+                        <!-- Cette partie affiche l'image du produit. -->
+                        <div class="product-item__img-container">
+                            {% set productImages = images|filter(image => image.products == product) %} 
+                                {% if productImages is empty %}
+                                <p>Produit indisponible</p>
+                            {% else %}
+                                {% for image in productImages %}
+                                    {% if image.imagePath is not empty %}
+                                        <img src="{{ asset('assets/images/BDD/Produits/' ~ image.ImagePath) }}" alt="{{image.name}}">
+                                    {% else %}
+                                        <p>Aucun chemin d'image disponible pour ce produit.</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                    {% if product.hasSizes %}
+                        <!-- Cette partie permet de sélectionner la taille du produit. -->
+                        <div class="product-item__size">
+                            <form>
+                                <select name="size{{ product.id }}" id="size{{ product.id }}">
+                                    <option value="" disabled selected>Choisissez une taille</option>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </form>
+                        </div>
+                    {% endif %}
+                        <!-- Cette partie permet d'ajouter ou de retirer le produit du panier. -->
+                        <div class="product-item__cart-options">
+                            {% if app.user %}
+                                <button id="ajouterPanier{{ product.id }}">Ajouter au panier</button>
+                                <button id="retirerPanier{{ product.id }}">Retirer du panier</button>
+                                <button id="confirmerCommande{{product.id }}"><div>Confirmer commande</div></button>
+                            {% else %}
+                                <p>Veuillez vous connecter pour ajouter ou retirer des articles du panier.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
+
+{% endblock %}
+
+
+

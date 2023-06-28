@@ -1,0 +1,36 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <canvas id="myLineChart"></canvas>
+    <canvas id="myBarChart"></canvas>
+    <canvas id="myOtherBarChart"></canvas>
+
+    <!-- Include the Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Fetch the data from your Express server
+        Promise.all([
+            fetch('http://localhost:3000/users').then(response => response.json()),
+            fetch('http://localhost:3000/products').then(response => response.json()),
+            fetch('http://localhost:3000/odersdetails').then(response => response.json()),
+            fetch('http://localhost:3000/orders').then(response => response.json()),
+            fetch('http://localhost:3000/articles').then(response => response.json())
+        ]).then(([usersData, productsData, ordersDetailsData, ordersData, articlesData]) => {
+            // Create the charts using the data from your Express server
+            const lineChart = new Chart(document.getElementById('mylineChart'), {
+                // Configure the chart using your data...
+            });
+
+            const barChart = new Chart(document.getElementById('myBarChart'), {
+                // Configure the chart using your data...
+            });
+
+            const otherBarChart = new Chart(document.getElementById('myOtherBarChart'), {
+                // Configure the chart using your data...
+            });
+        });
+    </script>
+
+    {{ parent() }}
+{% endblock %}

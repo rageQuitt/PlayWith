@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la commande{% endblock %}
+
+{% block content %}
+<h1>Détails de la commande #{{ orders['id'] ?? 'Non défini' }}</h1>
+
+<h2>Produits commandés:</h2>
+
+<ul>
+{% for order in orders %}
+    {{ order.getId }} {# if you are dealing with objects and getId method is available #}
+    {{ order.id }} {# if you are dealing with arrays and "id" key is available #}
+
+    <li>Aucun produit dans cette commande</li>
+{% endfor %}
+</ul>
+
+{% for order in orders %}
+    <p>Total de la commande {{ order.id }}: {{ order.getTotal() }}</p>
+{% endfor %}
+{% endblock content %}

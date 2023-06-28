@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article - {{ article.title }}{% endblock %}
+
+{% block content %}
+    <article>
+        <h1>{{ article.title }}</h1>
+        <div class="content-acontainer">
+            {# Check if the article has an image and display it if it does #}
+            {% if article.imageUrl %}
+                <div class="img-acontainer">
+                    <img class="post-img" src="{{ asset(article.imageUrl) }}" alt="Image for {{ article.title }}">
+                </div>
+            {% endif %}
+            
+            <div class="text-acontent">
+                <p>{{ article.content }}</p>
+                <p>{{article.author.name}}</p>
+            </div>
+        </div>
+
+        {# Check if the article has a video and display it if it does #}
+        {% if article.videoUrl %}
+            <div class="video-container">
+                <iframe class="post-video" src="{{ article.videoUrl }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        {% endif %}
+    </article>
+{% endblock %}

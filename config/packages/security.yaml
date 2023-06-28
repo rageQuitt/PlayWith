@@ -1,0 +1,36 @@
+# config/packages/security.yaml
+security:
+    providers:
+        users:
+            entity:
+                # the class of the entity that represents users
+                class: 'App\Entity\Users'
+                # the property to query by - e.g. email, username, etc
+                property: 'email'
+
+                # optional: if you're using multiple Doctrine entity
+                # managers, this option defines which one to use
+                #manager_name: 'customer'
+
+    password_hashers:
+    # Utilisez le hachage de mot de passe natif, qui sélectionne et effectue automatiquement la migration
+    # vers le meilleur algorithme de hachage possible (actuellement, c'est "bcrypt")
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            # Il s'agit du fournisseur que vous avez défini précédemment dans les providers
+            provider: users 
+            form_login:
+                # "app_login" est le nom de la route créée précédemment
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+            logout:
+                path: app_logout
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
