@@ -126,13 +126,7 @@ class Products
     }
 
     // ... (other methods and getters/setters for relationships)
-    /**
-     * @Route("/ajouter-au-panier/{id}", name="add_to_cart", methods={"POST"})
-     */
-    public function addToCart($id) {
-    // Logique pour ajouter un produit au panier
-    // 
-    }
+  
     public function setStock(int $stock): self
     {
     $this->stock = $stock;

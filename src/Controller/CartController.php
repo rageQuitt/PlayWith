@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,89 +10,165 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Products;
 use App\Entity\Cart;
-use App\Entity\CartItem; // Ajoutez cette ligne
+use App\Entity\CartItem;
+use App\Entity\Orders;
+use Symfony\Component\Security\Core\Security;
 
 
-class CartController extends AbstractController
-{/**
- * @Route("/ajouter-au-panier/{productId}", name="ajouter_au_panier", methods={"POST"})
+
+/**
+ * @Route("/cart", name="cart_")
  */
-public function ajouterAuPanier($productId, Request $request, EntityManagerInterface $em)
+class CartController extends AbstractController
 {
-    // Récupère le produit
-    $product = $em->getRepository(Products::class)->find($productId);
+
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+
+    /**
+     * @Route("/", name="cart_index")
+     */
+     public function index(SessionInterface $session, EntityManagerInterface $em)
+     {
+        $user = $this->security->getUser();
+
+        $cart = $session->get("cart", []);
+
+
+        //On fabrique les données
+        $dataCart = [];
+        $total = 0;
+
+        foreach($cart as $id => $quantity)
+        {
+            //Je recupère un produit
+            $product = $em->getRepository(Products::class)->find($id);
+
+            $dataCart[] = [
+
+                "product"=> $product,
+                "name" => $product->getName(), 
+                "quantity"=>$quantity
+            ];
+
+            $total += $product ->getPrice() * $quantity;
+        }
+
+        return $this->render('cart/cart.html.twig',compact("dataCart", "total"));
+     }
+
+    /**
+ * @Route("/add/{id}", name="add")
+ */
+public function add($id, EntityManagerInterface $em, SessionInterface $session, Request $request)
+{
+    $product = $em->getRepository(Products::class)->find($id);
+
+    //on récupére le panier actuel - On commence la session avec le panier où bien un tableau vide
+    $cart = $session->get("cart", []);
+
+    if(!empty($cart[$id])){
+        $cart[$id]++;
+    }else{
+        $cart[$id]=1;
+    }
 
     if (!$product) {
-        throw $this->createNotFoundException('Le produit demandé n\'existe pas');
+        throw $this->createNotFoundException('The product does not exist');
     }
 
-    // Récupère l'utilisateur
-    $user = $this->getUser();
+    //on sauvegarde dans la session
+    $session->set("cart",$cart);
 
-    // Récupère le panier de l'utilisateur, ou crée un nouveau si aucun n'existe
-    $cart = $user->getCart() ?? new Cart();
+    // dd($session); // Comment out or delete this line
 
-    // Crée un nouvel élément de panier pour le produit
-    $item = (new CartItem())
-        ->setProduct($product)
-        ->setQuantity(1) // Ou une autre quantité en fonction de vos besoins
-        ->setCart($cart);
+    return $this->redirect($request->server->get('HTTP_REFERER'));
 
-    $cart->addItem($item);
+}
 
-    // Persiste le nouvel élément de panier et le panier (si nouveau) dans la base de données
-    $em->persist($item);
-    if (!$user->getCart()) {
-        $em->persist($cart);
-        $user->setCart($cart);
+/**
+ * @Route("/remove/{id}", name="remove")
+ */
+public function remove($id, EntityManagerInterface $em, SessionInterface $session, Request $request)
+{
+    $product = $em->getRepository(Products::class)->find($id);
+
+    //on récupére le panier actuel - On commence la session avec le panier où bien un tableau vide
+    $cart = $session->get("cart", []);
+
+    if(!empty($cart[$id])){
+        if($cart[$id] > 1){
+            
+            $cart[$id]--;
+        
+    }else{
+       unset($cart[$id]);
+    }
+    }else{
+
+        $cart[$id] = 1;
     }
 
-    $em->flush();
+    if (!$product) {
+        throw $this->createNotFoundException('The product does not exist');
+    }
 
-    return $this->redirectToRoute('orders_index');
+    //on sauvegarde dans la session
+    $session->set("cart",$cart);
+
+    // dd($session); // Comment out or delete this line
+
+    return $this->redirect($request->server->get('HTTP_REFERER'));
+
 }
 
 
-    /**
-     * @Route("/retirer-du-panier/{productId}", name="retirer_du_panier", methods={"POST"})
-     */
-    public function retirerDuPanier($productId, Request $request)
-    {
-        // Récupère le panier de la session.
-        $cart = $request->getSession()->get('cart', []);
 
-        // Supprime le produit du panier.
-        unset($cart[$productId]);
+/**
+ * @Route("/delete/{id}", name="delete")
+ */
+public function delete($id, EntityManagerInterface $em, SessionInterface $session)
+{
+    $product = $em->getRepository(Products::class)->find($id);
 
-        // Stocke le panier mis à jour dans la session.
-        $request->getSession()->set('cart', $cart);
+    //on récupére le panier actuel - On commence la session avec le panier où bien un tableau vide
+    $cart = $session->get("cart", []);
 
-        return new JsonResponse(['success' => true]);
+    if(!empty($cart[$id])){
+    
+       unset($cart[$id]);
     }
 
-    /**
-     * @Route("/confirmer-commande/{productId}/{quantity}", name="confirmer_commande", methods={"POST"})
-     */
-    public function confirmerCommande($productId, $quantity, EntityManagerInterface $em)
-    {
-        // On récupère le produit dont l'ID correspond à $productId.
-        $product = $em->getRepository(Products::class)->find($productId);
-
-        if (!$product) {
-            return new JsonResponse(['error' => 'Le produit demandé n\'existe pas'], 404);
-        }
-
-        // On vérifie si le stock est suffisant.
-        if ($product->getStock() < $quantity) {
-            return new JsonResponse(['error' => 'Stock insuffisant'], 400);
-        }
-
-        // On décrémente le stock du produit.
-        $product->setStock($product->getStock() - $quantity);
-
-        // On applique les changements à la base de données.
-        $em->flush();
-
-        return new JsonResponse(['success' => true]);
+    if (!$product) {
+        throw $this->createNotFoundException('The product does not exist');
     }
+
+    //on sauvegarde dans la session
+    $session->set("cart",$cart);
+
+    // dd($session); // Comment out or delete this line
+
+    return $this->redirectToRoute("cart_cart_index");
+}
+
+
+
+/**
+ * @Route("/delete", name="delete_all")
+ */
+public function deleteAll( SessionInterface $session)
+{
+    //on récupére le panier actuel - On commence la session avec le panier où bien un tableau vide
+    $session->remove("cart");
+
+    // dd($session); 
+
+    return $this->redirectToRoute("cart_cart_index");
+}
+
 }

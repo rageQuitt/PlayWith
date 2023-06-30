@@ -9,6 +9,10 @@ use App\Repository\CategoriesRepository;
 use App\Repository\ProductsRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+
+
+
+
 class CategoriesController extends AbstractController
 {
     private $categoriesRepository;
@@ -32,12 +36,12 @@ class CategoriesController extends AbstractController
 
         if ($product) {
             $images = $product->getImages();
-            $firstImage = $images->first();  // This will get the first Image object in the collection
+            $firstImage = $images->first();
         
             if ($firstImage) {
                 $imagePath = $firstImage->getimagePath();
             } else {
-                $imagePath = 'path/to/default/image.jpg'; // Default image if none is found
+                $imagePath = 'https://previews.123rf.com/images/photoplotnikov/photoplotnikov1703/photoplotnikov170300032/74051448-ic%C3%B4ne-d-image-de-profil-avatar-m%C3%A2le-par-d%C3%A9faut-grey-homme-photo-placeholder-illustration.jpg'; 
             }
         
             $data[] = [
@@ -53,7 +57,7 @@ class CategoriesController extends AbstractController
 
 
     /**
-     * @Route("/categories", name="categories_list")
+     * @Route("/categories", name="categories_index")
      */
     public function list(SessionInterface $session): Response
     {
@@ -69,24 +73,38 @@ class CategoriesController extends AbstractController
         ]);
     }
 
+/**
+ * @Route("/categories/{id}", name="categories_show")
+ * 
+ *  */
+public function show($id)
+{
 
+    
+    // Use find($id) instead of findAll() to get a single Category
+    $category = $this->categoriesRepository->find($id);
 
-    /**
-     * @Route("/categories/{id}", name="categories_show")
-     */
-    public function show($id)
-    {
-        $category = $this->categoriesRepository->find($id);
+    $url = $this->generateUrl(
+        'categories_show', 
+        ['id'=> 1], 
+    );
 
-        return $this->render('categories/show.html.twig', [
-            'categories' => [$category] // array containing the category
-        ]);
+    // Check if the category exists
+    if (!$category) {
+        throw $this->createNotFoundException(
+            'No category found for id '.$id
+        );
     }
+
+    return $this->render('categories/show.html.twig', [
+        'category' => $category
+    ]);
+}
 
 
 
      /**
-     * @Route("/categories/index", name="categories_index")
+     * @Route("/categories/indexexe", name="categoriesindex" )
      */
     public function index()
     {
@@ -95,9 +113,7 @@ class CategoriesController extends AbstractController
 
         $categories = $response->toArray();
 
-        return $this->render('categories/list.html.twig', [
-            'categories' => $categories,
-        ]);
+
     }
 
 }

@@ -32,7 +32,6 @@ class ContactController extends AbstractController
 
             $mailer->send($email);
 
-            // Ajoutez une redirection ou un message flash ici pour indiquer que l'e-mail a été envoyé
         
 
 

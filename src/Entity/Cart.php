@@ -1,6 +1,5 @@
 <?php
 
-// src/Entity/Cart.php
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,19 +16,34 @@ class Cart
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\OneToMany(targetEntity=CartItem::class, mappedBy="cart")
      */
-    private $items;
+    private Collection $items;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity=Orders::class, mappedBy="cart")
+     */
+    private $orders;
 
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
-    // Other properties and methods...
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
 
     public function addItem(CartItem $item): self
     {
@@ -41,65 +55,25 @@ class Cart
         return $this;
     }
 
-    // More methods...
+    public function removeItem(CartItem $item): self
+    {
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+            // check if the cart in the item is the same as the current cart
+            if ($item->getCart() === $this) {
+                // if it's true then we remove the cart from the item
+                $item->setCart(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
 }
 
-// src/Entity/CartItem.php
-namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity(repositoryClass=CartItemRepository::class)
- */
-class CartItem
-{
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Products::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $product;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantity;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="items")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $cart;
-
-    // Other properties and methods...
-
-    public function setProduct(?Products $product): self
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function setCart(?Cart $cart): self
-    {
-        $this->cart = $cart;
-
-        return $this;
-    }
-
-    // More methods...
-}

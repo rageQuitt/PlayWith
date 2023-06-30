@@ -7,9 +7,9 @@
         <h1>{{ article.title }}</h1>
         <div class="content-acontainer">
             {# Check if the article has an image and display it if it does #}
-            {% if article.imageUrl %}
+            {% if article.imageArticleUrl %}
                 <div class="img-acontainer">
-                    <img class="post-img" src="{{ asset(article.imageUrl) }}" alt="Image for {{ article.title }}">
+                    <img class="post-img" src="{{ asset(article.imageArticleUrl) }}" alt="Image for {{ article.title }}">
                 </div>
             {% endif %}
             

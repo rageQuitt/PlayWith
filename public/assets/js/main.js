@@ -16,117 +16,7 @@ document.addEventListener("DOMContentLoaded", (onmouseenter) => {
   });
 });
 
-//-------------------------------------------------------------------//
-//---------------------    AJAX - Cart/test       --------------------//
-//-------------------------------------------------------------------//
 
-var paniers = {}; 
-
-// Dès que la page est complètement chargée, cette fonction sera appelée.
-document.addEventListener("DOMContentLoaded", function() {
-  // Charger les données du panier à partir du localStorage
-  paniers = JSON.parse(localStorage.getItem('paniers')) || {};
-
-  // Ajout au panier
-  var boutonsAjouterPanier = document.querySelectorAll("[id^='ajouterPanier']");
-  boutonsAjouterPanier.forEach(function(bouton) {
-    var productId = bouton.id.replace("ajouterPanier", "");
-    paniers[productId] = paniers[productId] || 0;
-    bouton.addEventListener("click", function() {
-      paniers[productId]++;
-      var panierValueElement = document.getElementById("panierValue" + productId);
-      panierValueElement.innerText = paniers[productId];
-      fetch('/ajouter-au-panier/' + productId, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ quantity: paniers[productId] }),
-    })
-    .then(function(response) {   // Première fonction de rappel
-        console.log("Response", response);
-    
-        if (!response.ok) {
-          throw new Error("Erreur HTTP, statut = " + response.status);
-        }
-    
-        // Convertit la réponse en JSON.
-        // Cela retourne une nouvelle Promesse.
-        return response.json();
-    })
-    .then(function(data) {   // Deuxième fonction de rappel
-        // Cette fonction est appelée lorsque la Promesse du dessus est résolue.
-        // Les données JSON de la réponse sont passées en argument.
-        console.log("Data", data);
-    
-        // Le reste de votre code...
-    })
-      .catch(function(error) {
-        console.error(error);
-      });
-    });
-  });
-
-  // Retrait du panier
-  var boutonsRetirerPanier = document.querySelectorAll("[id^='retirerPanier']");
-  boutonsRetirerPanier.forEach(function(bouton) {
-    var productId = bouton.id.replace("retirerPanier", "");
-    bouton.addEventListener("click", function() {
-      if (paniers[productId] > 0) {
-        paniers[productId]--;
-        var panierValueElement = document.getElementById("panierValue" + productId);
-        panierValueElement.innerText = paniers[productId];
-        fetch('/retirer-du-panier/' + productId, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ quantity: paniers[productId] }),
-        })
-        .then(function(response) {
-          if (!response.ok) {
-            throw new Error("Erreur HTTP, statut = " + response.status);
-          }
-          return response.json();
-        })
-        .then(function(data) {
-          if (data.success) {
-            panierValueElement.innerText = paniers[productId];
-          }
-        })
-        .catch(function(error) {
-          console.error(error);
-        });
-      }
-    });
-  });
-
-  // Confirmation de la commande
-  var boutonsConfirmerCommande = document.querySelectorAll("[id^='confirmerCommande']");
-  boutonsConfirmerCommande.forEach(function(bouton) {
-    var productId = bouton.id.replace("confirmerCommande", "");
-    bouton.addEventListener("click", function() {
-      var url = '/confirmer-commande/' + 1 + '/' + 50;
-      fetch(url, {
-        method: 'POST',
-      })
-      .then(function(response) {
-        if (!response.ok) {
-          throw new Error("Erreur HTTP, statut = " + response.status);
-        }
-        return response.json();
-      })
-      .then(function(data) {
-        if (data.success) {
-          window.location.href = "/confirmation";
-        }
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
-    });
-  });
-});
 
 //-----------------------------------------------------------------------------------//
 //----------------------         SVG                           -------------------------//
@@ -199,8 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   images.forEach(image => {
       image.addEventListener('click', function(e) {
-          // Votre code pour l'effet ici.
-          // Par exemple, vous pouvez ajouter une classe à l'image:
           e.target.classList.toggle("active");
       });
   });

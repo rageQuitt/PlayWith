@@ -20,21 +20,7 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('lastname')
-            ->add('firstname')
-            ->add('address')
-            ->add('zipcode')
-            ->add('city')
-            ->add('RGPDContent', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Engagez vous',
-                    ]),
-                ],
-            ])
-     
+            ->add('email')     
             
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,

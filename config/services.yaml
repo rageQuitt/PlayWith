@@ -1,5 +1,4 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
+# config/services.yaml
 
 parameters:
     images_directory: '%kernel.project_dir%/public/assets/images/'
@@ -9,6 +8,10 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
 
     App\:
         resource: '../src/'
@@ -16,6 +19,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Migrations'
+            - '../src/Tests'
 
     doctrine.system_cache_provider:
         class: Doctrine\Common\Cache\Psr6\DoctrineProvider
@@ -28,6 +33,10 @@ services:
             - { name: twig.extension }
 
     App\Services\OrderService:
+        autowire: true
+        autoconfigure: true
+
+    App\Services\CartService:
         autowire: true
         autoconfigure: true
 

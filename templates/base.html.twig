@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -22,7 +21,7 @@
     <body>
         {% block body %}
   <header class="p-3 text-bg-dark">
-    <div class="container">
+    <nav class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
@@ -42,11 +41,13 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">   
                     {% if 'ROLE_ADMIN' in app.user.roles %}
-                        <li><a class="dropdown-item" href="{{ path('admin') }}">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
+                        <li><a class="dropdown-item" href="{{ path('admin') }}">Tableau de bord</a></li>
+                        <li><a class="dropdown-item" href="{{ path('cart_cart_index') }}">Panier</a></li>
+
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
                     {% else %}
                         <li><a class="dropdown-item" href="{{ path('order_confirmation') }}">Panier</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
                     {% endif %}
                 </ul>
             </li>
@@ -61,33 +62,32 @@
         {% endif %}
 
         </div>
-    </div>
+    </nav>
 </header>
 
         {% block content %}{% endblock %}
 
-  <!-- Footer -->
   <footer class='bg-dark text-center text-lg-start text-white'>
-    <!-- Grid container -->
     <div class="container p-4 pb-0">
-      <!-- Section: Links -->
       <section class="">
-        <!--Grid row-->
         <div class="row">
-          <!-- Grid column -->
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">
               PLAYWITH
             </h6>
-            <p>
-              TEST DU GRID EVITE LE BOOTSTRAP.
-            </p>
+            <ul>
+              <li><a href="{{url('homepage')}}" class="nav-link px-2 text-secondary">Accueil</a></li>
+                <li><a href="{{ url('app_blog') }}" class="nav-link px-2 text-white">Blog</a></li>
+                <li><a href="{{url('products_list')}}" class="nav-link px-2 text-white">Produits</a></li>
+                <li><a href="{{url('contact')}}" class="nav-link px-2 text-white">Contact</a></li>
+                <li><a href="{{url('a_propos')}}" class="nav-link px-2 text-white">À Propos</a></li>
+            </ul>
           </div>
-          <!-- Grid column -->
+          <!-- Grid test 1 column -->
 
           <hr class="w-100 clearfix d-md-none" />
 
-          <!-- Grid column -->
+          <!-- Grid 2 t column -->
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
             <p>
@@ -103,23 +103,17 @@
               <a class="text-white">SMARTS DRUGS</a>
             </p>
           </div>
-          <!-- Grid column -->
+          <hr class="w-100 clearfix d-md-none" />
 
           <hr class="w-100 clearfix d-md-none" />
 
-          <!-- Grid column -->
-          <hr class="w-100 clearfix d-md-none" />
-
-          <!-- Grid column -->
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
             <p><i class="fas fa-home mr-3"></i> Libreville,  10012, GA</p>
             <p><i class="fas fa-envelope mr-3"></i> pierre.ntoutoume@gmail.com</p>
             <p><i class="fas fa-phone mr-3"></i> +241 060 140 895</p>
           </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
+          
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Réseaux</h6>
 
@@ -199,8 +193,9 @@
         {% endblock %}
 
         {% block javascripts %}
-        <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>    
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
         <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
         <script src="{{asset('assets/js/main.js')}}"></script> 

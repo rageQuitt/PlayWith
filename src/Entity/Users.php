@@ -39,47 +39,45 @@ private $roles = [];
  * @ORM\Column(type="string")
  */
 private ?string $password = null;
-
 /**
- * @ORM\Column(type="string", length=100)
+ * @ORM\Column(type="string", length=100, nullable=true)
  */
 private ?string $lastname = null;
 
 /**
- * @ORM\Column(type="string", length=100)
+ * @ORM\Column(type="string", length=100, nullable=true)
  */
 private ?string $firstname = null;
 
 /**
- * @ORM\Column(type="string", length=255)
+ * @ORM\Column(type="string", length=255, nullable=true)
  */
 private ?string $address = null;
 
 /**
- * @ORM\Column(type="string", length=5)
+ * @ORM\Column(type="string", length=5, nullable=true)
  */
 private ?string $zipcode = null;
 
 /**
- * @ORM\Column(type="string", length=150)
+ * @ORM\Column(type="string", length=150, nullable=true)
  */
 private ?string $city = null;
 
+/**
+ * @ORM\Column(type="datetime_immutable", nullable=true, name="created_at")
+ */
+private ?\DateTimeImmutable $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true, name="created_at")
-     */
-    private ?\DateTimeImmutable $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Orders::class, mappedBy="users")
      */
     private Collection $orders;
 
-    public function __construct(?DateTimeImmutable $createdAt = null, UserPasswordHasherInterface $passwordHasher) {
+    public function __construct(?DateTimeImmutable $createdAt = null) {
         $this->createdAt = $createdAt ? $createdAt : new DateTimeImmutable();
         $this->orders = new ArrayCollection();
-        $this->passwordHasher = $passwordHasher;
     }
 
     public function getId(): ?int

@@ -3,7 +3,7 @@
 {% block title %}{{ product.id }}{% endblock %}
 
 {% block content %}
-<main>
+<main class="main-product">
     <a href="{{url('products_list')}}">Tous les produits</a> > 
     <a href="{{url('categories_list', { 'categoryId': product.categories.id })}}">{{product.categories.name}}</a> > 
     <a href="{{url('product_show', { 'id': product.id })}}">{{product.name}}</a>
@@ -25,7 +25,7 @@
                     <h2>{{ product.name }}</h2>
                 </div>
                 <div class="single-product-item__price">
-                    <h3>{{ product.price }} €</h3>
+                    <h3>{{ product.price / 100 }} €</h3>
                 </div>
                 {% if product.hasSizes %}
                 <div class="single-product-item__size">
@@ -41,15 +41,20 @@
                     </form>
                 </div>
                 {% endif %}
-                <div class="single-product-item__cart-options">
-                    <button id="ajouterPanier{{ product.id }}">Ajouter article</button>
-                    <button id="retirerPanier{{ product.id }}">Retirer article</button>
-                    <p>Articles dans le panier: <span id="panierValue{{ product.id }}">0</span></p>
-                </div>
-                <div>
-                <p>Description: {{ product.description }}</p>
-                <button id="confirmerCommande{{ product.id }}"><div>Confirmer commande</div></button>
-                </div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="single-product-item__cart-options">
+                        <button id="ajouterPanier{{ product.id }}"><a href="{{path("cart_add", {id:product.id})}}">Ajouter article</a></button>
+                        <button id="retirerPanier{{ product.id }}"><a href="{{path('cart_remove', {id:product.id})}}">Retirer article</a></button>
+                        <p>Articles dans le panier: <span id="panierValue{{ product.id }}">0</span></p>
+                    </div>
+                    <div>
+                        <p>Description: {{ product.description }}</p>
+                            <form method= 'POST' action="#">
+                                <button type="#" id="#">Confirmer commande</button>
+                            </form>
+                        {% else %}
+                            <p>Vous devez être connecté pour ajouter des produits au panier et confirmer une commande.</p>
+                    {% endif %}
             </div>
         </div>
     </section>

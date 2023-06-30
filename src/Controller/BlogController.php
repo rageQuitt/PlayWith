@@ -12,7 +12,7 @@ use App\Repository\UsersRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ArticleRepository;
-
+use App\Repository\CategoriesRepository;
 
 
 
@@ -24,11 +24,13 @@ class BlogController extends AbstractController
 {
     private $usersRepository;
     private $articleRepository;
+    private $categoriesRepository;
 
-    public function __construct(UsersRepository $usersRepository, ArticleRepository $articleRepository)
+    public function __construct(UsersRepository $usersRepository, ArticleRepository $articleRepository, CategoriesRepository $categoriesRepository)
     {
         $this->usersRepository = $usersRepository;
         $this->articleRepository = $articleRepository;
+        $this->categoriesRepository = $categoriesRepository;
     }
 
     #[RouteAttribute("/", name: "index", methods: ["GET"])]
@@ -40,6 +42,10 @@ class BlogController extends AbstractController
         // Récupère tous les articles
         $articles = $this->articleRepository->findAll();
 
+        //Récupère toutes les catégories
+
+        $categories = $this->categoriesRepository->findAll();
+
         // get the selected data from session
         $selected = $session->get('selected');
         
@@ -48,6 +54,7 @@ class BlogController extends AbstractController
             'controller_name' => 'BlogController',
             'users' => $users,
             'articles' => $articles,
+            'categories' => $categories
         ]);
     }
 

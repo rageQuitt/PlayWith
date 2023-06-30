@@ -21,7 +21,7 @@
 
                         <!-- Cette partie affiche le prix du produit. -->
                         <div class="product-item__price">
-                            <h5>{{ product.price }} €</h5>
+                            <h5>{{ product.price / 100 }} €</h5>
                         </div>
                         <!-- Cette partie affiche l'image du produit. -->
                         <div class="product-item__img-container">
@@ -57,9 +57,11 @@
                         <!-- Cette partie permet d'ajouter ou de retirer le produit du panier. -->
                         <div class="product-item__cart-options">
                             {% if app.user %}
-                                <button id="ajouterPanier{{ product.id }}">Ajouter au panier</button>
-                                <button id="retirerPanier{{ product.id }}">Retirer du panier</button>
-                                <button id="confirmerCommande{{product.id }}"><div>Confirmer commande</div></button>
+                                <button id="ajouterPanier{{ product.id }}"><a href="{{path("cart_add", {id:product.id})}}">Ajouter au panier</a></button>
+                                <button id="retirerPanier{{ product.id }}"><a href="{{path('cart_remove', {id:product.id})}}">Retirer du panier</a></button>
+                                <form method= '#' action="#">
+                                    <button type="submit" id="#">Confirmer commande</button>
+                                </form>
                             {% else %}
                                 <p>Veuillez vous connecter pour ajouter ou retirer des articles du panier.</p>
                             {% endif %}

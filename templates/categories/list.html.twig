@@ -3,22 +3,24 @@
 {% block title %}Toutes les catégories !{% endblock %}
 
 {% block content %}
- <h1>Categories</h1>
+<main class = "categories-main">
+ 
+    <h1 id="titre">Categories</h1>
 
-<div class="categories-container">
-{% for category in categories %}
-    {% set firstProduct = category.products|first %}
-    {% if firstProduct %}
-        {% set firstImage = firstProduct.images|first %}
-        {% if firstImage %}
-            <div class="category-item" id="category-item-{{ loop.index }}">
-                <p>{{ category.name }}</p>
-                <a href ="#"><img src="{{ asset('assets/images/BDD/Produits/' ~ firstImage.ImagePath) }}" class="category-image"/></a>
-            </div>
+    <div class="categories-container">
+    {% for category in categories %}
+        {% set firstProduct = category.products|first %}
+        {% if firstProduct %}
+            {% set firstImage = firstProduct.images|first %}
+            {% if firstImage %}
+                <div class="category-item" id="category-item-{{ loop.index }}">
+                    <p>{{ category.name }}</p>
+                    <a href="{{ path('categories_show', {id: category.id}) }}"><img src="{{ asset('assets/images/BDD/Produits/' ~ firstImage.ImagePath) }}" class="category-image"/></a>
+                </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
-{% endfor %}
-</div>
-
+    {% endfor %}
+    </div>
+</main>
 
 {% endblock %}

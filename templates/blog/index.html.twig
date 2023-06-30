@@ -73,7 +73,6 @@
         <aside class="sidebar">
             <div class="aside-content">
                 <h3>Articles</h3>
-                <span>____________________________________________</span>
                 <ul>
                     <li></li>
                     <li></li>
@@ -81,18 +80,15 @@
                 </ul>
             </div>
             <div class="aside-content">
-                <h3>Catégories</h3>
-                <span>____________________________________________</span>  
+                <h3><a href="{{path('categories_index')}}">Catégories</a></h3>
                     <ul>
-                        <li><a href="#">Compléments Alimentaires</a></li>
-                        <li><a href="#">Shakers</a></li>
-                        <li><a href="#">Smart Drugs</a></li>
-                        <li><a href="#">Vêtements</a></li>
+                        {% for category in categories %}
+                            <li><a href="{{ path('categories_show', {id: category.id}) }}">{{ category.name }}</a></li>
+                        {% endfor %}
                     </ul>
             </div>
             <div class="aside-content">
-                <h3>Contact</h3>
-                <span>____________________________________________</span>
+                <h3><a href ="{{url('contact')}}">Contact</a></h3>
                 <ul>
                     <li> <p><i class="fas fa-home mr-3"></i> Libreville,  10012, GA</p></li>
                     <li><p><i class="fas fa-envelope mr-3"></i> pierre.ntoutoume@gmail.com</p></li>

@@ -60,6 +60,7 @@ class AdminDashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('PlayWith Corp.');
+            
     }
 
     public function configureMenuItems(): iterable
@@ -73,8 +74,8 @@ class AdminDashboardController extends AbstractDashboardController
                 ->setAction(Crud::PAGE_NEW),
                 MenuItem::linkToCrud('Edit post', 'fas fa-file-edit', Article::class)
                 ->setAction(Crud::PAGE_EDIT),
-                MenuItem::linkToCrud('Remove post', 'fa fa-file-minus', Article::class)
-                ->setAction(Crud::PAGE_EDIT),
+                MenuItem::linkToCrud('List post', 'fa fa-file-minus', Article::class)
+                ->setAction(Crud::PAGE_INDEX),
             ]),
             MenuItem::section('Commandes'),
             MenuItem::subMenu('Commandes', 'fas fa-file')
@@ -83,8 +84,8 @@ class AdminDashboardController extends AbstractDashboardController
                     ->setAction(Crud::PAGE_NEW),
                 MenuItem::linkToCrud('Edit orders', 'fas fa-file-edit', Orders::class)
                     ->setAction(Crud::PAGE_EDIT),
-                MenuItem::linkToCrud('Remove orders', 'fas fa-file-minus', Orders::class)
-                    ->setAction(Crud::PAGE_EDIT),
+                MenuItem::linkToCrud('List orders', 'fas fa-file-minus', Orders::class)
+                    ->setAction(Crud::PAGE_INDEX),
             ]),
             MenuItem::section('Produits'),
             MenuItem::subMenu('Produits','fas fa-shopping-cart')
@@ -93,8 +94,8 @@ class AdminDashboardController extends AbstractDashboardController
                     ->setAction(Crud::PAGE_NEW),
                 MenuItem::linkToCrud('Edit product', 'fas fa-edit', Products::class)
                     ->setAction(Crud::PAGE_EDIT),
-                MenuItem::linkToCrud('Remove product', 'fas fa-cart-arrow-down', Products::class)
-                    ->setAction(Crud::PAGE_EDIT),
+                MenuItem::linkToCrud('List product', 'fas fa-cart-arrow-down', Products::class)
+                    ->setAction(Crud::PAGE_INDEX),
             ]),
             MenuItem::section('Utilisateurs'),
             MenuItem::subMenu('Utilisateurs','fas fa-users')
@@ -103,18 +104,13 @@ class AdminDashboardController extends AbstractDashboardController
                     ->setAction(Crud::PAGE_NEW),
                 MenuItem::linkToCrud('Edit user', 'fas fa-edit', Users::class)
                     ->setAction(Crud::PAGE_EDIT),
-                MenuItem::linkToCrud('Remove user', 'fas fa-user-minus', Users::class)
-                    ->setAction(Crud::PAGE_EDIT),
+                MenuItem::linkToCrud('List user', 'fas fa-user-minus', Users::class)
+                    ->setAction(Crud::PAGE_INDEX),
             ]),
-            MenuItem::section('Reports'),
-            MenuItem::linkToRoute('Current month', 'fas fa-chart-line', 'report_current_month'),
-            MenuItem::linkToRoute('Last quarter', 'fas fa-chart-line', 'report_last_quarter'),
-            MenuItem::linkToRoute('Social engagement', 'fas fa-chart-line', 'report_social_engagement'),
-            MenuItem::linkToRoute('Year-end sale', 'fas fa-chart-line', 'report_year_end_sale'),
             MenuItem::section('Integrations'),
             // add here other integrations,
+            MenuItem::linkToRoute('Retour sur le site', 'fas fa-home', 'homepage'), 
             MenuItem::section(),
-            MenuItem::linkToRoute('Settings', 'fas fa-cogs', 'settings'),
             MenuItem::linkToLogout('Logout', 'fas fa-sign-out-alt'),
         ];
     }

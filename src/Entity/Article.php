@@ -35,7 +35,7 @@ class Article
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $imageUrl;
+    private $imageArticleUrl;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -60,9 +60,9 @@ class Article
         return $this ->content;
     }
 
-    public function getImageUrl(): ?string
+    public function getImageArticleUrl(): ?string
     {
-        return $this->imageUrl;
+        return $this->imageArticleUrl;
     }
 
     public function getVideoUrl(): ?string
@@ -84,6 +84,26 @@ class Article
     {
         return $this->author ? $this->author->getName() : null;
     }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
+    }
     
+    public function setImageArticleUrl(string $setImageArticleUrl): self
+    {
+        $this->setImageArticleUrl = $setImageArticleUrl;
+
+        return $this;
+    }
 }
 

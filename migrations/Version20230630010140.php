@@ -10,22 +10,22 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class VersionAvantfin extends AbstractMigration
+final class Version20230630010140 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Drops coupons and couponstypes tables';
+        return '';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE couponstypes DROP FOREIGN KEY coupons_types_id');
-        $this->addSql('DROP TABLE coupons');
-        $this->addSql('DROP TABLE couponstypes');
+        // this up() migration is auto-generated, please modify it to your needs
+
     }
 
     public function down(Schema $schema): void
     {
-       
+        // this down() migration is auto-generated, please modify it to your needs
+
     }
 }
