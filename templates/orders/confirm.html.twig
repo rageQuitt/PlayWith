@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de Commande{% endblock %}
+
+{% block content %}
+<h1>Confirmation de Commande</h1>
+
+<p>Merci pour votre commande. Voici les détails :</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    {% set total = 0 %}
+
+{% for productId, quantity in cart %}
+    <p>
+        Product ID: {{ productId }},
+        Quantity: {{ quantity }}
+    </p>
+{% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3">Total de la Commande</th>
+            <th>{{ total }}</th>
+        </tr>
+    </tfoot>
+</table>
+
+<a href="{{ path('homepage') }}">Retour à la page d'accueil</a>
+{% endblock %}

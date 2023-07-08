@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Home
+{% endblock %}
+{% block meta %}
+<link rel= "stylesheet" href="{{asset('assets/css/cover.css')}}">
+
+{% endblock meta %}
+
+{% block body %}
+<body class="min-vh-100 d-flex text-center text-bg-dark">
+
+<div class="container min-vh-100 d-flex p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">Playwith</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link fw-bold py-1 px-0 text-light mx-2" href="{{ url('app_blog') }}">Blog</a>
+        <a class="nav-link fw-bold py-1 px-0 text-light mx-2" href="{{url('contact')}}">Contact</a>
+        
+        {% if app.user %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">                        
+                    <img src="" alt="Photo de profil" id="photoDeProfil" class="rounded-circle" style="width: 50px; height: 50px;">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">   
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <li><a class="dropdown-item" href="{{ path('admin') }}">Tableau de bord</a></li>
+                        <li><a class="dropdown-item" href="{{ path('order_confirmation') }}">Panier</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{{ path('order_confirmation') }}">Panier</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% else %}
+            <!-- Sinon, afficher les boutons de connexion et d'inscription. -->
+            <li class="nav-item">
+                <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-light me-2 loginButton">Connexion</button></a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_register') }}"><button type="button" class="btn btn-light loginButton">Inscription</button></a>
+            </li>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="mb-auto">
+    <h1 class="display-4">PlayWith</h1>
+    <p class="lead">Bienvenue sur notre page, ici vous découvrirez tous les bons plans fitness, lifestyle, ainsi que le meilleur de la nutrition optimisée.</p>
+    <p class="lead">
+      <a href="{{ url('app_blog') }}" class="btn btn-lg btn btn-light fw-bold border-white text-dark">En savoir plus</a>
+    </p>
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <p>Playwith <a href="https://github.com/rageQuitt/PlayWith" class="text-white"> project on GitHub</a>, by <a href="#" class="text-white">@rageQuitt</a>.</p>
+  </footer>
+</div>
+</body>
+<script src='{{asset('assets/js/main.js')}}'>
+
+{% endblock body %}

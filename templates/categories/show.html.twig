@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<main class="category-container">
+    <div class="category-title">
+        <h1>{{ category.name }}</h1>
+    </div>
+    <div >
+        <ul class="category-list-container">
+       {% for product in category.products %}
+    <li class="category-items">
+            <h2>{{ product.name }}</h2>
+        {% for image in product.getImages() %}
+            {% if image and image.imagePath is not empty %}
+                <img src="{{ asset('assets/images/BDD/Produits/' ~ image.imagePath) }}" alt="{{ product.name }}">
+            {% else %}
+                <p>Aucun chemin d'image disponible pour ce produit.</p>
+            {% endif %}
+                    <p>{{ product.description }}</p>
+
+        {% endfor %}
+    </li>
+    
+{% endfor %}
+
+
+        </ul>
+    </div>
+</main>
+{% endblock %}

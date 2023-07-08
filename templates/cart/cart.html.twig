@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Cart {% endblock %}
+
+{% block content %}
+
+<section class="cart-header">
+    <h1> Votre Panier </h1>
+</section>
+<table class="cart-table">
+    <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for element in dataCart %}
+            <tr>
+                <td>{{element.product.name}}</td>
+                <td>{{element.product.price / 100}} €</td>
+                <td>{{element.quantity}}</td>
+                <td>{{element.quantity * element.product.price / 100}} €</td>
+                <td>
+                    <a href ="{{path('cart_add', {id:element.product.id})}}"
+                    class="btn btn-success"><i class="fa fa-cart-plus"></i>
+                    </a>
+                    <a href="{{path('cart_remove', {id:element.product.id})}}" class= "btn btn-warning">
+                        <ion-icon name="cart-outline"></ion-icon>
+                    </a>
+                    <a href="{{path('cart_delete', {id:element.product.id})}}" class= "btn btn-danger">
+                        <ion-icon name="cart-outline"></ion-icon>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="empty-cart">Votre panier est vide</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total</td>
+            <td>{{total / 100 }} €</td>
+            <td>
+                <a href="{{ path('cart_delete_all') }}" class= "btn btn-danger">
+                    <ion-icon name="cart-outline"></ion-icon>
+                </a>
+            </td>
+        </tr>  
+    </tfoot>
+</table>
+
+{% endblock %}

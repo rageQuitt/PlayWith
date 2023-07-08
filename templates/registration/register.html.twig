@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+
+<div class="gradient-background">
+    <main class="registration-form">
+        <h1 class='inscription'>Inscription</h1>
+        <div class="yubel form_row">
+            {{ form_start(registrationForm) }}
+            <span class='icon'></span>
+            <div class="input-box">
+                {{ form_row(registrationForm.email, { label: 'Email', attr: {autocomplete: 'off'}}) }}
+            </div>
+            <div class="input-box">
+                 {{ form_row(registrationForm.plainPassword.first, { label: 'Password', attr: {autocomplete: 'off'}}) }}
+            </div>
+            <div class="input-box">
+                {{ form_row(registrationForm.plainPassword.second, { label: 'Confirm Password', attr: {autocomplete: 'off'}}) }}
+            </div>
+
+            <div class="terms-of-use">
+                <p>En vous inscrivant, vous acceptez nos <a href="/terms-of-use">Conditions d'utilisation</a> et notre <a href="/privacy-policy">Politique de confidentialité</a>.</p>
+            </div>
+            <button type="submit" class="submitbtn">S'incrire</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,46 @@
+# config/services.yaml
+
+parameters:
+    images_directory: '%kernel.project_dir%/public/assets/images/'
+    images_directory_2: '%kernel.project_dir%/public/assets/images/BDD/'
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Migrations'
+            - '../src/Tests'
+
+    doctrine.system_cache_provider:
+        class: Doctrine\Common\Cache\Psr6\DoctrineProvider
+        factory: ['App\Cache\DoctrineProviderFactory', 'createDoctrineProvider']
+        arguments:
+            - '@cache.app'
+
+    App\Twig\AppExtension:
+        tags:
+            - { name: twig.extension }
+
+    App\Services\OrderService:
+        autowire: true
+        autoconfigure: true
+
+    App\Services\CartService:
+        autowire: true
+        autoconfigure: true
+
+twig:
+    globals:
+        orderService: '@App\Services\OrderService'
+        CartService: '@App\Services\CartService'

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos{% endblock %}
+
+{% block content %}
+<main class = "about-main">
+<div class="auteur">
+  <img src="{{asset('assets/images/Auteur.jpg')}}" class = 'auteur' alt="Auteur">
+  <span class="banniere"> Pierre-Henri NTOUTOUME</span>
+</div>
+
+  <div class="about-text">
+    <h1> À propos de moi</h1>
+      <p>Je suis un développeur web passionné.
+          J'ai étudié l'informatique à l'école 3WA.
+          Je travaille actuellement en tant que développeur full-stack.
+        </p>
+  </div>
+
+</main>
+{% endblock %}
