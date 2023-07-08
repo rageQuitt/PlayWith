@@ -85,5 +85,19 @@ class BlogController extends AbstractController
         return new JsonResponse(['status' => 'success']);
     }
 
-    // ...
+   /**
+ * @Route("/article/random", name="random_article", methods={"GET"})
+ */
+public function randomArticle(): Response
+{
+    // Récupère tous les articles
+    $articles = $this->articleRepository->findAll();
+
+    // Choisissez un article aléatoire
+    $randomArticle = $articles[array_rand($articles)];
+
+    // Redirige vers l'article aléatoire
+    return $this->redirectToRoute('app_blog_article', ['id' => $randomArticle->getId()]);
+}
+
 }

@@ -14,11 +14,14 @@
                     <div class="product-item__info">
                         <!-- Cette partie affiche le nom du produit. -->
                         <div class="product-item__name">
+                        {% if app.user %}
                             <a href="{{ path('product_show', {'id': product.id}) }}">
                                 <h2>{{ product.name }}</h2>
                             </a>
-                        </div>
-
+                        {% else %}
+                            <h2>{{ product.name }}</h2>
+                        {% endif %}
+                    </div>
                         <!-- Cette partie affiche le prix du produit. -->
                         <div class="product-item__price">
                             <h5>{{ product.price / 100 }} €</h5>
