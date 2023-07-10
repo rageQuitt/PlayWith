@@ -353,8 +353,16 @@ margin: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 100%;
   list-style: none;
+}
+
+ul.product-list li{
+
+  background-color: red;
+  width: 25%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 
 .product-item__info {
