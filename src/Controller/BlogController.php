@@ -60,7 +60,7 @@ class BlogController extends AbstractController
 
 
     
-    #[RouteAttribute("/article/{id}", name: "article", methods: ["GET"])]
+    #[RouteAttribute("/article/{id}", name: "article", methods: ["GET"], requirements: ["id" => "\d+"])]
     public function article(int $id): Response
     {
         // Récupère l'article par son id

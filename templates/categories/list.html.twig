@@ -2,6 +2,12 @@
 
 {% block title %}Toutes les catégories !{% endblock %}
 
+{% block category_navigation %}
+    <nav>
+        <a href="{{path('categories_index')}}">Toutes les catégories</a>
+    </nav>
+{% endblock %}
+
 {% block content %}
 <main class = "categories-main">
  

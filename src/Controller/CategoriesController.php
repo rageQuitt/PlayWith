@@ -59,35 +59,33 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/categories", name="categories_index")
      */
-    public function list(SessionInterface $session): Response
+    public function list(SessionInterface $session, ProductsRepository $productsRepository): Response
     {
         $categories = $this->categoriesRepository->findAll();
-
+    
         $selected = $session->get('selected');
-
-
+    
+        $product = [];
+        foreach ($categories as $category) {
+            $product[] = $productsRepository->findFirstProductInCategories($category);
+        }
+    
         return $this->render('categories/list.html.twig', [
             'categories' => $categories,
             'selected' => $selected,
-
+            'products' => $product,
         ]);
     }
 
+
 /**
  * @Route("/categories/{id}", name="categories_show")
- * 
- *  */
-public function show($id)
+ */
+public function show($id, ProductsRepository $productsRepository)
 {
-
-    
     // Use find($id) instead of findAll() to get a single Category
     $category = $this->categoriesRepository->find($id);
-
-    $url = $this->generateUrl(
-        'categories_show', 
-        ['id'=> 1], 
-    );
+    $product = $productsRepository->findOneBy(['categories' => $category]);
 
     // Check if the category exists
     if (!$category) {
@@ -97,9 +95,12 @@ public function show($id)
     }
 
     return $this->render('categories/show.html.twig', [
-        'category' => $category
+        'category' => $category,
+        'product' => $product
     ]);
 }
+
+
 
 
 
@@ -115,5 +116,7 @@ public function show($id)
 
 
     }
+
+    
 
 }
